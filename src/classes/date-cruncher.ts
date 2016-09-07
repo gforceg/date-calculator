@@ -120,10 +120,10 @@ export class DateCruncher {
           // *** this should use a dictionary type ***
           var new_holidays = {}; // : Dictionary<String, IEvent>
           DateCruncher.holidays.forEach(event => {
-            if (event.month === date.getMonth() + 1) {
+            if (event.month === (<Date>date).getMonth() + 1) {
               var holiday_date: Date;
               if (typeof event.day === 'number') {
-                holiday_date = new Date(event.month + '/' + event.day + '/' + date.getFullYear());
+                holiday_date = new Date(event.month + '/' + event.day + '/' + (<Date>date).getFullYear());
                 // new_holidays[event.month + '/' + event.day + '/' + date.getFullYear()] = event;
               } else if (typeof event.day === 'string') {
 
