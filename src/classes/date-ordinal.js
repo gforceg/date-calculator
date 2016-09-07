@@ -1,17 +1,17 @@
 "use strict";
-var enums_1 = require('../enums');
-var _1 = require('./');
+var days_of_the_week_1 = require('../enums/days-of-the-week');
+var date_cruncher_1 = require('./date-cruncher');
 var DateOrdinal = (function () {
     function DateOrdinal(date, expression) {
         expression = expression.replace(/\s+/g, '');
-        this.month = _1.DateCruncher.resolveDate(date);
+        this.month = date_cruncher_1.DateCruncher.resolveDate(date);
         if (!this.month) {
             return null;
         }
-        expression = expression.replace(_1.DateCruncher.DateExpressionStart, '');
+        expression = expression.replace(date_cruncher_1.DateCruncher.DateExpressionStart, '');
         this.ordinal = null;
         this.day = null;
-        var ordinal_match = expression.match(_1.DateCruncher.OrdinalExpression);
+        var ordinal_match = expression.match(date_cruncher_1.DateCruncher.OrdinalExpression);
         if (!ordinal_match) {
             return null;
         }
@@ -40,31 +40,31 @@ var DateOrdinal = (function () {
                 break;
         }
         expression = expression.replace(ordinal_match.toString(), '');
-        var day_match = expression.match(_1.DateCruncher.DayOfWeekExpression);
+        var day_match = expression.match(date_cruncher_1.DateCruncher.DayOfWeekExpression);
         if (!day_match) {
             return null;
         }
         switch (day_match.toString().substr(0, 3).toLowerCase()) {
             case 'sun':
-                this.day = enums_1.DaysOfTheWeek.Sunday;
+                this.day = days_of_the_week_1.DaysOfTheWeek.Sunday;
                 break;
             case 'mon':
-                this.day = enums_1.DaysOfTheWeek.Monday;
+                this.day = days_of_the_week_1.DaysOfTheWeek.Monday;
                 break;
             case 'tue':
-                this.day = enums_1.DaysOfTheWeek.Tuesday;
+                this.day = days_of_the_week_1.DaysOfTheWeek.Tuesday;
                 break;
             case 'wed':
-                this.day = enums_1.DaysOfTheWeek.Wednesday;
+                this.day = days_of_the_week_1.DaysOfTheWeek.Wednesday;
                 break;
             case 'thu':
-                this.day = enums_1.DaysOfTheWeek.Thursday;
+                this.day = days_of_the_week_1.DaysOfTheWeek.Thursday;
                 break;
             case 'fri':
-                this.day = enums_1.DaysOfTheWeek.Friday;
+                this.day = days_of_the_week_1.DaysOfTheWeek.Friday;
                 break;
             case 'sat':
-                this.day = enums_1.DaysOfTheWeek.Saturday;
+                this.day = days_of_the_week_1.DaysOfTheWeek.Saturday;
                 break;
             default:
                 this.day = null;

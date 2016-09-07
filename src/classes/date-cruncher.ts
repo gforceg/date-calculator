@@ -7,6 +7,7 @@ import { MonthsOfTheYear } from '../enums/months-of-the-year';
 import { IEvent } from '../interfaces/ievent.interface';
 import { DateOrdinal } from '../classes/date-ordinal';
 import { DateMathExpression } from '../classes/date-math-expression';
+import { Dictionary } from 'typescript-collections';
 
 // a very simple date calculator - it does basic date addition and subtraction
 // it handles simple expressions such as:
@@ -63,18 +64,8 @@ export class DateCruncher {
       day: '25th day'
     }];
 
-  static pretty_units = {
-    'calendarday': 'calendar days',
-    'calendardays': 'calendar days',
-    'calendarmonth': 'calendar months',
-    'calendarmonths': 'calendar months',
-    'businessday': 'business days',
-    'businessdays': 'business days',
-    'workday': 'work days',
-    'workdays': 'work days',
-    'workingday': 'working days',
-    'workingdays': 'working days'
-  };
+  static pretty_units = new Dictionary<string, string>();
+  
   // some nice reusable RegExps
   static DateExpression: RegExp = /(?:\d{1,2}\/\d{1,2}\/\d{4})|(?:\d{4}\-\d{2}\-\d{2})/;
   static DateExpressionStart: RegExp = /^(?:\d{1,2}\/\d{1,2}\/\d{4})|(?:\d{4}\-\d{2}\-\d{2})/;
@@ -101,7 +92,7 @@ export class DateCruncher {
   // the way holiday_cache is actually used is:
   // holidays_for_this_month = getHolidays('08/09/2016') - returns a lazy-cached assoc array of holidays where:
   // each key is a date and each value is aIEvent.
-  static holiday_cache = {}; // : Dictionary<String, Dictionary<String, IEvent>>
+  static holiday_cache: Dictionary<String, Dictionary<String, IEvent>>
 
   // lazy caching (and retrieving) of holidays for a given 'mm/yyyy'
   // *** this should use a dictionary type ***
@@ -115,10 +106,10 @@ export class DateCruncher {
 
         let cache_key = DateCruncher.resolveCacheKey(date);
 
-        if (DateCruncher.holiday_cache[cache_key] === undefined) {
+        if (DateCruncher.holiday_cache.getValue(cache_key) === undefined) {
           // find and cache the holidays for the given 'mm/yyyy'
           // *** this should use a dictionary type ***
-          var new_holidays = {}; // : Dictionary<String, IEvent>
+          var new_holidays: Dictionary<String, IEvent> = new Dictionary<String, IEvent>();
           DateCruncher.holidays.forEach(event => {
             if (event.month === (<Date>date).getMonth() + 1) {
               var holiday_date: Date;
@@ -148,14 +139,14 @@ export class DateCruncher {
                 }
                 // uncomment to output holidays as they are cached.
                 // console.log('added holiday: ' + event.name + ' -> ' + DateCruncher.resolveDateString(holiday_date))
-                new_holidays[DateCruncher.resolveDateString(holiday_date)] = event;
+                new_holidays.setValue(DateCruncher.resolveDateString(holiday_date), event);
               }
             }
           });
 
-          DateCruncher.holiday_cache[cache_key] = new_holidays;
+          DateCruncher.holiday_cache.setValue(cache_key, new_holidays);
         }
-        return DateCruncher.holiday_cache[cache_key];
+        return DateCruncher.holiday_cache.getValue(cache_key);
       }
       return null;
     } catch (ex) {
@@ -415,7 +406,8 @@ export class DateCruncher {
             // 4.2 make sure we say "1 day" or "x days"
             let units = date_math.constant.units;
             // 4.1
-            if (dc.pretty_units[units] !== undefined) { units = dc.pretty_units[units]; }
+            let p_units = dc.pretty_units.getValue(units);
+            if (p_units) { units = p_units; }
             // 4.2
             if (date_math.constant.quantity === 1) {
               units = units.replace(/s$/i, '');
@@ -638,3 +630,14 @@ export class DateCruncher {
 
 
 
+DateCruncher.pretty_units.setValue('calendarday', 'calendar days');
+DateCruncher.pretty_units.setValue('calendarday', 'calendar days');
+DateCruncher.pretty_units.setValue('calendardays', 'calendar days');
+DateCruncher.pretty_units.setValue('calendarmonth', 'calendar months');
+DateCruncher.pretty_units.setValue('calendarmonths', 'calendar months');
+DateCruncher.pretty_units.setValue('businessday', 'business days');
+DateCruncher.pretty_units.setValue('businessdays', 'business days');
+DateCruncher.pretty_units.setValue('workday', 'work days');
+DateCruncher.pretty_units.setValue('workdays', 'work days');
+DateCruncher.pretty_units.setValue('workingday', 'working days');
+DateCruncher.pretty_units.setValue('workingdays', 'working days');

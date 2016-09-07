@@ -1,6 +1,9 @@
 "use strict";
-var _1 = require('../enums/');
-var _2 = require('../classes/');
+var days_of_the_week_1 = require('../enums/days-of-the-week');
+var months_of_the_year_1 = require('../enums/months-of-the-year');
+var date_ordinal_1 = require('../classes/date-ordinal');
+var date_math_expression_1 = require('../classes/date-math-expression');
+var typescript_collections_1 = require('typescript-collections');
 var DateCruncher = (function () {
     function DateCruncher() {
     }
@@ -12,8 +15,8 @@ var DateCruncher = (function () {
             }
             if (date instanceof Date) {
                 var cache_key = DateCruncher.resolveCacheKey(date);
-                if (DateCruncher.holiday_cache[cache_key] === undefined) {
-                    var new_holidays = {};
+                if (DateCruncher.holiday_cache.getValue(cache_key) === undefined) {
+                    var new_holidays = new typescript_collections_1.Dictionary();
                     DateCruncher.holidays.forEach(function (event) {
                         if (event.month === date.getMonth() + 1) {
                             var holiday_date;
@@ -25,20 +28,20 @@ var DateCruncher = (function () {
                             }
                             if (holiday_date) {
                                 switch (holiday_date.getDay()) {
-                                    case _1.DaysOfTheWeek.Saturday:
+                                    case days_of_the_week_1.DaysOfTheWeek.Saturday:
                                         holiday_date.setDate(holiday_date.getDate() - 1);
                                         break;
-                                    case _1.DaysOfTheWeek.Sunday:
+                                    case days_of_the_week_1.DaysOfTheWeek.Sunday:
                                         holiday_date.setDate(holiday_date.getDate() + 1);
                                         break;
                                 }
-                                new_holidays[DateCruncher.resolveDateString(holiday_date)] = event;
+                                new_holidays.setValue(DateCruncher.resolveDateString(holiday_date), event);
                             }
                         }
                     });
-                    DateCruncher.holiday_cache[cache_key] = new_holidays;
+                    DateCruncher.holiday_cache.setValue(cache_key, new_holidays);
                 }
-                return DateCruncher.holiday_cache[cache_key];
+                return DateCruncher.holiday_cache.getValue(cache_key);
             }
             return null;
         }
@@ -95,8 +98,8 @@ var DateCruncher = (function () {
         }
         if (date instanceof Date) {
             switch (date.getDay()) {
-                case _1.DaysOfTheWeek.Sunday:
-                case _1.DaysOfTheWeek.Saturday:
+                case days_of_the_week_1.DaysOfTheWeek.Sunday:
+                case days_of_the_week_1.DaysOfTheWeek.Saturday:
                     return true;
             }
         }
@@ -146,7 +149,7 @@ var DateCruncher = (function () {
         return null;
     };
     DateCruncher.CreateDateOrdinal = function (date, expression) {
-        var date_ordinal = new _2.DateOrdinal(date, expression);
+        var date_ordinal = new date_ordinal_1.DateOrdinal(date, expression);
         if (date_ordinal.ordinal < 1) {
             return null;
         }
@@ -187,9 +190,9 @@ var DateCruncher = (function () {
                         nth += ['st', 'nd', 'rd', 'th'][Math.min(3, parseInt(nth, 10) - 1)];
                     }
                     var day = void 0;
-                    ordinal.day ? day = _1.DaysOfTheWeek[ordinal.day] : day = 'day';
+                    ordinal.day ? day = days_of_the_week_1.DaysOfTheWeek[ordinal.day] : day = 'day';
                     day = ' ' + day;
-                    var fancy_string = ' is the ' + nth + day + ' in ' + _1.MonthsOfTheYear[ordinal_date.getMonth()];
+                    var fancy_string = ' is the ' + nth + day + ' in ' + months_of_the_year_1.MonthsOfTheYear[ordinal_date.getMonth()];
                     showStep(dc.resolveDateString(ordinal_date) + fancy_string);
                 }
                 if (!ordinal_date) {
@@ -210,13 +213,14 @@ var DateCruncher = (function () {
                     i_date_1 = parsed_date;
                 }
                 math_matches.forEach(function (match) {
-                    var date_math = new _2.DateMathExpression(i_date_1, match);
+                    var date_math = new date_math_expression_1.DateMathExpression(i_date_1, match);
                     var init_date_string = dc.resolveDateString(i_date_1);
                     i_date_1 = dc.evaluateDateMathExpression(date_math);
                     if (showStep) {
                         var units = date_math.constant.units;
-                        if (dc.pretty_units[units] !== undefined) {
-                            units = dc.pretty_units[units];
+                        var p_units = dc.pretty_units.getValue(units);
+                        if (p_units) {
+                            units = p_units;
                         }
                         if (date_math.constant.quantity === 1) {
                             units = units.replace(/s$/i, '');
@@ -252,7 +256,7 @@ var DateCruncher = (function () {
                                     return null;
                                 }
                                 if (dc_1.isWeekendDay(solution_date)) {
-                                    showStep(date_string + ' is a ' + _1.DaysOfTheWeek[solution_date.getDay()]);
+                                    showStep(date_string + ' is a ' + days_of_the_week_1.DaysOfTheWeek[solution_date.getDay()]);
                                 }
                                 else if (dc_1.isHoliday(solution_date)) {
                                     var holidays = dc_1.getHolidays(solution_date);
@@ -444,18 +448,7 @@ var DateCruncher = (function () {
             month: 12,
             day: '25th day'
         }];
-    DateCruncher.pretty_units = {
-        'calendarday': 'calendar days',
-        'calendardays': 'calendar days',
-        'calendarmonth': 'calendar months',
-        'calendarmonths': 'calendar months',
-        'businessday': 'business days',
-        'businessdays': 'business days',
-        'workday': 'work days',
-        'workdays': 'work days',
-        'workingday': 'working days',
-        'workingdays': 'working days'
-    };
+    DateCruncher.pretty_units = new typescript_collections_1.Dictionary();
     DateCruncher.DateExpression = /(?:\d{1,2}\/\d{1,2}\/\d{4})|(?:\d{4}\-\d{2}\-\d{2})/;
     DateCruncher.DateExpressionStart = /^(?:\d{1,2}\/\d{1,2}\/\d{4})|(?:\d{4}\-\d{2}\-\d{2})/;
     DateCruncher.DateExpressionEnd = /(?:(?:\d{1,2}\/\d{1,2}\/\d{4})|(?:\d{4}\-\d{2}\-\d{2}))$/;
@@ -466,8 +459,18 @@ var DateCruncher = (function () {
     DateCruncher.DateMathOperatorExpression = /[\-\+]/;
     DateCruncher.DateMathExpressionFragment = /[\-\+]\d+(?:(?:calendar|business|work(?:ing)?)?day(?:s)?|(?:calendar)?month(?:s)?|year(?:s)?|week(?:s)?)/gi;
     DateCruncher.DateRoundExpression = /round\s?(?:down|up)$/i;
-    DateCruncher.holiday_cache = {};
     return DateCruncher;
 }());
 exports.DateCruncher = DateCruncher;
+DateCruncher.pretty_units.setValue('calendarday', 'calendar days');
+DateCruncher.pretty_units.setValue('calendarday', 'calendar days');
+DateCruncher.pretty_units.setValue('calendardays', 'calendar days');
+DateCruncher.pretty_units.setValue('calendarmonth', 'calendar months');
+DateCruncher.pretty_units.setValue('calendarmonths', 'calendar months');
+DateCruncher.pretty_units.setValue('businessday', 'business days');
+DateCruncher.pretty_units.setValue('businessdays', 'business days');
+DateCruncher.pretty_units.setValue('workday', 'work days');
+DateCruncher.pretty_units.setValue('workdays', 'work days');
+DateCruncher.pretty_units.setValue('workingday', 'working days');
+DateCruncher.pretty_units.setValue('workingdays', 'working days');
 //# sourceMappingURL=date-cruncher.js.map
