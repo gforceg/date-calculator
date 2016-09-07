@@ -8,6 +8,7 @@ var DateCruncher = (function () {
     function DateCruncher() {
     }
     DateCruncher.getHolidays = function (date) {
+        console.log('get holidays');
         try {
             date = DateCruncher.resolveDate(date);
             if (date == null) {
@@ -15,7 +16,9 @@ var DateCruncher = (function () {
             }
             if (date instanceof Date) {
                 var cache_key = DateCruncher.resolveCacheKey(date);
-                if (DateCruncher.holiday_cache.getValue(cache_key) === undefined) {
+                console.log('checking holiday_cache using cache_key: ' + cache_key);
+                DateCruncher.holiday_cache.getValue(cache_key);
+                if (!DateCruncher.holiday_cache.getValue(cache_key)) {
                     var new_holidays = new Collections.Dictionary();
                     DateCruncher.holidays.forEach(function (event) {
                         if (event.month === date.getMonth() + 1) {
@@ -52,9 +55,11 @@ var DateCruncher = (function () {
     };
     DateCruncher.getHoliday = function (date) {
         var holidays = DateCruncher.getHolidays(date);
-        var holiday = holidays[DateCruncher.resolveDateString(date)];
-        if (holiday !== undefined) {
-            return holiday;
+        if (holidays) {
+            var holiday = holidays.getValue(DateCruncher.resolveDateString(date));
+            if (holiday) {
+                return holiday;
+            }
         }
         return null;
     };
@@ -119,7 +124,10 @@ var DateCruncher = (function () {
         }
         if (date instanceof Date) {
             var holidays = DateCruncher.getHolidays(date);
-            return (holidays[DateCruncher.resolveDateString(date)] !== undefined);
+            if (holidays) {
+                console.dir(holidays);
+                return (!!holidays.getValue(DateCruncher.resolveDateString(date)));
+            }
         }
         return false;
     };
@@ -261,7 +269,7 @@ var DateCruncher = (function () {
                                 }
                                 else if (dc_1.isHoliday(solution_date)) {
                                     var holidays = dc_1.getHolidays(solution_date);
-                                    var holiday = holidays[date_string];
+                                    var holiday = holidays.getValue(date_string);
                                     if (holiday !== undefined) {
                                         showStep(date_string + ' is ' + holiday.name);
                                     }

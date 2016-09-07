@@ -15,7 +15,7 @@ export declare class DateCruncher {
     static DateMathExpressionFragment: RegExp;
     static DateRoundExpression: RegExp;
     static holiday_cache: Collections.Dictionary<String, Collections.Dictionary<String, IEvent>>;
-    static getHolidays(date: Date | string): any;
+    static getHolidays(date: Date | string): Collections.Dictionary<String, IEvent>;
     static getHoliday(date: Date | string): IEvent;
     static resolveDate(date: string | Date): Date;
     static resolveDateString(date: Date | string): string;

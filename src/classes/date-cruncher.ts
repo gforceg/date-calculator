@@ -96,7 +96,7 @@ export class DateCruncher {
 
   // lazy caching (and retrieving) of holidays for a given 'mm/yyyy'
   // *** this should use a dictionary type ***
-  static getHolidays(date: Date | string): any {
+  static getHolidays(date: Date | string): Collections.Dictionary<String, IEvent> {
     console.log('get holidays');
     try {
       date = DateCruncher.resolveDate(date);
@@ -160,9 +160,10 @@ export class DateCruncher {
 
   static getHoliday(date: Date | string): IEvent {
     let holidays = DateCruncher.getHolidays(date);
-    let holiday = holidays[DateCruncher.resolveDateString(date)];
-    if (holiday !== undefined) { return holiday; }
-
+    if (holidays) {
+      let holiday: IEvent = holidays.getValue(DateCruncher.resolveDateString(date));
+      if (holiday) { return holiday; }
+    }
     return null;
   }
   // if string return new date
@@ -254,7 +255,10 @@ export class DateCruncher {
       // fetch the holidays for the mm/yyyy in the date passed to this function
 
       var holidays = DateCruncher.getHolidays(date);
-      return (holidays[DateCruncher.resolveDateString(date)] !== undefined);
+      if(holidays) {
+      console.dir(holidays);
+      return (!!holidays.getValue(DateCruncher.resolveDateString(date)));
+      }
     }
     return false;
   }
@@ -453,7 +457,7 @@ export class DateCruncher {
                   showStep(date_string + ' is a ' + DaysOfTheWeek[solution_date.getDay()]);
                 } else if (dc.isHoliday(solution_date)) {
                   let holidays = dc.getHolidays(solution_date);
-                  let holiday: IEvent = holidays[date_string];
+                  let holiday: IEvent = holidays.getValue(date_string);
                   if (holiday !== undefined) {
                     showStep(date_string + ' is ' + holiday.name);
                   } else { showStep(date_string + ' is a holiday\n'); }  // this line should be unreachable...  
