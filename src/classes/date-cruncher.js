@@ -8,7 +8,6 @@ var DateCruncher = (function () {
     function DateCruncher() {
     }
     DateCruncher.getHolidays = function (date) {
-        console.log('get holidays');
         try {
             date = DateCruncher.resolveDate(date);
             if (date == null) {
@@ -16,7 +15,6 @@ var DateCruncher = (function () {
             }
             if (date instanceof Date) {
                 var cache_key = DateCruncher.resolveCacheKey(date);
-                console.log('checking holiday_cache using cache_key: ' + cache_key);
                 DateCruncher.holiday_cache.getValue(cache_key);
                 if (!DateCruncher.holiday_cache.getValue(cache_key)) {
                     var new_holidays = new Collections.Dictionary();
@@ -125,7 +123,6 @@ var DateCruncher = (function () {
         if (date instanceof Date) {
             var holidays = DateCruncher.getHolidays(date);
             if (holidays) {
-                console.dir(holidays);
                 return (!!holidays.getValue(DateCruncher.resolveDateString(date)));
             }
         }

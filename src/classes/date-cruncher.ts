@@ -97,7 +97,7 @@ export class DateCruncher {
   // lazy caching (and retrieving) of holidays for a given 'mm/yyyy'
   // *** this should use a dictionary type ***
   static getHolidays(date: Date | string): Collections.Dictionary<String, IEvent> {
-    console.log('get holidays');
+
     try {
       date = DateCruncher.resolveDate(date);
       if (date == null) {
@@ -106,7 +106,7 @@ export class DateCruncher {
       if (date instanceof Date) {
 
         let cache_key = DateCruncher.resolveCacheKey(date);
-        console.log('checking holiday_cache using cache_key: ' + cache_key);
+
         DateCruncher.holiday_cache.getValue(cache_key)
 
         if (!DateCruncher.holiday_cache.getValue(cache_key)) {
@@ -142,7 +142,7 @@ export class DateCruncher {
                     break;
                 }
                 // uncomment to output holidays as they are cached.
-                // console.log('added holiday: ' + event.name + ' -> ' + DateCruncher.resolveDateString(holiday_date))
+
                 new_holidays.setValue(DateCruncher.resolveDateString(holiday_date), event);
               }
             }
@@ -256,7 +256,7 @@ export class DateCruncher {
 
       var holidays = DateCruncher.getHolidays(date);
       if(holidays) {
-      console.dir(holidays);
+
       return (!!holidays.getValue(DateCruncher.resolveDateString(date)));
       }
     }
@@ -344,16 +344,11 @@ export class DateCruncher {
     expression = expression.replace(/thursday/i, 'thu');
     expression = expression.replace(/friday/i, 'fri');
     expression = expression.replace(/saturday/i, 'sat');
-    // console.log('1. ');
-    // console.log(expression);
     // 2.
     let date_match = expression.match(dc.DateExpressionStart);
     if (date_match) {
       expression = expression.replace(dc.DateExpressionStart, '');
       let parsed_date = dc.resolveDate(date_match[0]);
-      // console.dir(parsed_date);
-      // console.log('2. ');
-      // console.log(expression);
 
       // the solution date will eventually be returned
       let solution_date: Date = null;
@@ -361,13 +356,10 @@ export class DateCruncher {
       // 3.
       let ordinal_match = expression.match(dc.DateOrdinalExpression);
       if (ordinal_match) {
-        // console.dir(ordinal_match);
         expression = expression.replace(dc.DateOrdinalExpression, '');
-        // console.log('3. ');
-        // console.log(expression);
+
         let ordinal = dc.CreateDateOrdinal(parsed_date, ordinal_match[0]);
         if (!ordinal) { return null; }
-        // console.dir(ordinal);
         ordinal_date = dc.resolveDate(dc.evaluateOrdinalDate(ordinal));
 
         // show steps for the client program.
@@ -397,8 +389,6 @@ export class DateCruncher {
       let math_matches = expression.match(dc.DateMathExpressionFragment);
       if (math_matches) {
         expression = expression.replace(dc.DateMathExpressionFragment, '');
-        // console.log('4. ');
-        // console.log(expression);
         let i_date: Date = null;
         if (ordinal_date) {
           i_date = ordinal_date;
@@ -433,8 +423,6 @@ export class DateCruncher {
       if (!dc.isBusinessDay(solution_date)) {
         let round_match = expression.match(dc.DateRoundExpression);
         if (round_match) {
-          // console.log('5. ');
-          // console.log(expression);
           expression = expression.replace(dc.DateRoundExpression, '');
 
           if (showStep) {
@@ -485,7 +473,7 @@ export class DateCruncher {
             }
           }
         }
-      } // else { console.log('NO ROUNDING DETECTED'); }
+      }
       return solution_date;
     }
 
@@ -505,7 +493,6 @@ export class DateCruncher {
 
     if (!_branch) { return null; }
 
-    // console.dir(_branch);
     // if we go this far everything should be in the correct format.
     // this calculator only does addition and subtraction.
     // subtract if necessary
