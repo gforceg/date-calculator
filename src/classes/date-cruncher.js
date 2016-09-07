@@ -460,6 +460,7 @@ var DateCruncher = (function () {
     DateCruncher.DateMathOperatorExpression = /[\-\+]/;
     DateCruncher.DateMathExpressionFragment = /[\-\+]\d+(?:(?:calendar|business|work(?:ing)?)?day(?:s)?|(?:calendar)?month(?:s)?|year(?:s)?|week(?:s)?)/gi;
     DateCruncher.DateRoundExpression = /round\s?(?:down|up)$/i;
+    DateCruncher.holiday_cache = new typescript_collections_1.Dictionary();
     return DateCruncher;
 }());
 exports.DateCruncher = DateCruncher;

@@ -7,7 +7,7 @@ import { MonthsOfTheYear } from '../enums/months-of-the-year';
 import { IEvent } from '../interfaces/ievent.interface';
 import { DateOrdinal } from '../classes/date-ordinal';
 import { DateMathExpression } from '../classes/date-math-expression';
-import { Dictionary } from 'typescript-collections';
+import * as Collections from 'typescript-collections';
 
 // a very simple date calculator - it does basic date addition and subtraction
 // it handles simple expressions such as:
@@ -64,7 +64,7 @@ export class DateCruncher {
       day: '25th day'
     }];
 
-  static pretty_units = new Dictionary<string, string>();
+  static pretty_units: Collections.Dictionary<string, string> = new Collections.Dictionary<string, string>();
   
   // some nice reusable RegExps
   static DateExpression: RegExp = /(?:\d{1,2}\/\d{1,2}\/\d{4})|(?:\d{4}\-\d{2}\-\d{2})/;
@@ -87,12 +87,12 @@ export class DateCruncher {
   static DateRoundExpression: RegExp = /round\s?(?:down|up)$/i;
 
   // an associative array of holiday dates
-  // *** this should use a dictionary type ***
+  // *** this should use a Collections.Dictionary type ***
   // the npm package: 'typescript-collections' but did not work at run time when I tried it.
   // the way holiday_cache is actually used is:
   // holidays_for_this_month = getHolidays('08/09/2016') - returns a lazy-cached assoc array of holidays where:
   // each key is a date and each value is aIEvent.
-  static holiday_cache: Dictionary<String, Dictionary<String, IEvent>> = new Dictionary<String, Dictionary<String, IEvent>>();
+  static holiday_cache: Collections.Dictionary<String, Collections.Dictionary<String, IEvent>> = new Collections.Dictionary<String, Collections.Dictionary<String, IEvent>>();
 
   // lazy caching (and retrieving) of holidays for a given 'mm/yyyy'
   // *** this should use a dictionary type ***
@@ -109,7 +109,7 @@ export class DateCruncher {
         if (DateCruncher.holiday_cache.getValue(cache_key) === undefined) {
           // find and cache the holidays for the given 'mm/yyyy'
           // *** this should use a dictionary type ***
-          var new_holidays: Dictionary<String, IEvent> = new Dictionary<String, IEvent>();
+          var new_holidays: Collections.Dictionary<String, IEvent> = new Collections.Dictionary<String, IEvent>();
           DateCruncher.holidays.forEach(event => {
             if (event.month === (<Date>date).getMonth() + 1) {
               var holiday_date: Date;
