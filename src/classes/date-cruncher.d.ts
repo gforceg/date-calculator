@@ -1,9 +1,9 @@
 import { IEvent } from '../interfaces/ievent.interface';
 import { DateOrdinal } from '../classes/date-ordinal';
-import { Dictionary } from 'typescript-collections';
+import * as Collections from 'typescript-collections';
 export declare class DateCruncher {
     static holidays: Array<IEvent>;
-    static pretty_units: Dictionary<string, string>;
+    static pretty_units: Collections.Dictionary<string, string>;
     static DateExpression: RegExp;
     static DateExpressionStart: RegExp;
     static DateExpressionEnd: RegExp;
@@ -14,7 +14,7 @@ export declare class DateCruncher {
     static DateMathOperatorExpression: RegExp;
     static DateMathExpressionFragment: RegExp;
     static DateRoundExpression: RegExp;
-    static holiday_cache: Dictionary<String, Dictionary<String, IEvent>>;
+    static holiday_cache: Collections.Dictionary<String, Collections.Dictionary<String, IEvent>>;
     static getHolidays(date: Date | string): any;
     static getHoliday(date: Date | string): IEvent;
     static resolveDate(date: string | Date): Date;

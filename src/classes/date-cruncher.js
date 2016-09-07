@@ -3,7 +3,7 @@ var days_of_the_week_1 = require('../enums/days-of-the-week');
 var months_of_the_year_1 = require('../enums/months-of-the-year');
 var date_ordinal_1 = require('../classes/date-ordinal');
 var date_math_expression_1 = require('../classes/date-math-expression');
-var typescript_collections_1 = require('typescript-collections');
+var Collections = require('typescript-collections');
 var DateCruncher = (function () {
     function DateCruncher() {
     }
@@ -16,7 +16,7 @@ var DateCruncher = (function () {
             if (date instanceof Date) {
                 var cache_key = DateCruncher.resolveCacheKey(date);
                 if (DateCruncher.holiday_cache.getValue(cache_key) === undefined) {
-                    var new_holidays = new typescript_collections_1.Dictionary();
+                    var new_holidays = new Collections.Dictionary();
                     DateCruncher.holidays.forEach(function (event) {
                         if (event.month === date.getMonth() + 1) {
                             var holiday_date;
@@ -449,7 +449,7 @@ var DateCruncher = (function () {
             month: 12,
             day: '25th day'
         }];
-    DateCruncher.pretty_units = new typescript_collections_1.Dictionary();
+    DateCruncher.pretty_units = new Collections.Dictionary();
     DateCruncher.DateExpression = /(?:\d{1,2}\/\d{1,2}\/\d{4})|(?:\d{4}\-\d{2}\-\d{2})/;
     DateCruncher.DateExpressionStart = /^(?:\d{1,2}\/\d{1,2}\/\d{4})|(?:\d{4}\-\d{2}\-\d{2})/;
     DateCruncher.DateExpressionEnd = /(?:(?:\d{1,2}\/\d{1,2}\/\d{4})|(?:\d{4}\-\d{2}\-\d{2}))$/;
@@ -460,7 +460,7 @@ var DateCruncher = (function () {
     DateCruncher.DateMathOperatorExpression = /[\-\+]/;
     DateCruncher.DateMathExpressionFragment = /[\-\+]\d+(?:(?:calendar|business|work(?:ing)?)?day(?:s)?|(?:calendar)?month(?:s)?|year(?:s)?|week(?:s)?)/gi;
     DateCruncher.DateRoundExpression = /round\s?(?:down|up)$/i;
-    DateCruncher.holiday_cache = new typescript_collections_1.Dictionary();
+    DateCruncher.holiday_cache = new Collections.Dictionary();
     return DateCruncher;
 }());
 exports.DateCruncher = DateCruncher;
