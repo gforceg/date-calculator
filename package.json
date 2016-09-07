@@ -1,0 +1,26 @@
+{
+  "name": "date_cruncher",
+  "version": "1.0.0",
+  "description": "a string-centric date calculator.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gforceg/date_cruncher.git"
+  },
+  "keywords": [
+    "date",
+    "math"
+  ],
+  "author": "Greg Hedin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gforceg/date_cruncher/issues"
+  },
+  "homepage": "https://github.com/gforceg/date_cruncher#readme",
+  "dependencies": {
+    "typescript": "^1.8.10"
+  }
+}
