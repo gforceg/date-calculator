@@ -1,6 +1,6 @@
 {
-  "name": "date_cruncher",
-  "version": "1.0.0",
+  "name": "date-cruncher",
+  "version": "1.0.5",
   "description": "a string-centric date calculator.",
   "main": "index.js",
   "scripts": {

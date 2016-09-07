@@ -2,9 +2,11 @@
 // date-calculator
 // v1.0
 
-import { DaysOfTheWeek, MonthsOfTheYear } from '../enums/';
-import { IEvent } from '../interfaces/';
-import { DateOrdinal, DateMathExpression } from '../classes/';
+import { DaysOfTheWeek, } from '../enums/days-of-the-week';
+import { MonthsOfTheYear } from '../enums/months-of-the-year';
+import { IEvent } from '../interfaces/ievent.interface';
+import { DateOrdinal } from '../classes/date-ordinal';
+import { DateMathExpression } from '../classes/date-math-expression';
 
 // a very simple date calculator - it does basic date addition and subtraction
 // it handles simple expressions such as:

@@ -1,5 +1,5 @@
-import { DaysOfTheWeek } from '../enums';
-import { DateCruncher } from './';
+import { DaysOfTheWeek } from '../enums/days-of-the-week';
+import { DateCruncher } from './date-cruncher';
 // inflates the following string    /month = new Date('8/9/2016'); (only the month and year in this date will actually be used, hence the variable's name)
 // 8/9/2016 2nd Wednesday    ------| ordinal = 2
 //                                  \day = 3 

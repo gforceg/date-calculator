@@ -1,4 +1,4 @@
-import { DateCruncher } from './';
+import { DateCruncher } from './date-cruncher';
 
 export class DateMathExpression {
   date: Date;
