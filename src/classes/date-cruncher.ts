@@ -119,7 +119,8 @@ export class DateCruncher {
               } else if (typeof event.day === 'string') {
 
                 // create an ordinal expression
-                var holiday_date = DateCruncher.evaluateOrdinalDate(DateCruncher.CreateDateOrdinal(date, event.day));
+                let d = DateCruncher.resolveDate(date);
+                var holiday_date = DateCruncher.evaluateOrdinalDate(DateCruncher.CreateDateOrdinal(d, event.day));
               }
 
               // now we have a date instance for the holiday for the given year.

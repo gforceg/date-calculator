@@ -1,0 +1,33 @@
+import { IEvent } from '../interfaces/ievent.interface';
+import { DateOrdinal } from '../classes/date-ordinal';
+import { Dictionary } from 'typescript-collections';
+export declare class DateCruncher {
+    static holidays: Array<IEvent>;
+    static pretty_units: Dictionary<string, string>;
+    static DateExpression: RegExp;
+    static DateExpressionStart: RegExp;
+    static DateExpressionEnd: RegExp;
+    static DateOrdinalExpression: RegExp;
+    static DayOfWeekExpression: RegExp;
+    static OrdinalExpression: RegExp;
+    static DateMathConsantExpression: RegExp;
+    static DateMathOperatorExpression: RegExp;
+    static DateMathExpressionFragment: RegExp;
+    static DateRoundExpression: RegExp;
+    static holiday_cache: Dictionary<String, Dictionary<String, IEvent>>;
+    static getHolidays(date: Date | string): any;
+    static getHoliday(date: Date | string): IEvent;
+    static resolveDate(date: string | Date): Date;
+    static resolveDateString(date: Date | string): string;
+    static resolveCacheKey(date: Date): string;
+    static isWeekendDay(date: string | Date): boolean;
+    static isWeekDay(date: string | Date): boolean;
+    static isBusinessDay(date: string | Date): boolean;
+    static isHoliday(date: string | Date): boolean;
+    static priorBusinessDay(date: string | Date): Date;
+    static nextBusinessDay(date: string | Date): Date;
+    static CreateDateOrdinal(date: Date, expression: string): DateOrdinal;
+    static evaluate(expression: string, showStep?: (str: string) => void): Date;
+    private static evaluateDateMathExpression(_branch);
+    private static evaluateOrdinalDate(ordinal);
+}

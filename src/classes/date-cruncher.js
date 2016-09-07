@@ -24,7 +24,8 @@ var DateCruncher = (function () {
                                 holiday_date = new Date(event.month + '/' + event.day + '/' + date.getFullYear());
                             }
                             else if (typeof event.day === 'string') {
-                                var holiday_date = DateCruncher.evaluateOrdinalDate(DateCruncher.CreateDateOrdinal(date, event.day));
+                                var d = DateCruncher.resolveDate(date);
+                                var holiday_date = DateCruncher.evaluateOrdinalDate(DateCruncher.CreateDateOrdinal(d, event.day));
                             }
                             if (holiday_date) {
                                 switch (holiday_date.getDay()) {
