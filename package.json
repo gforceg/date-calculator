@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gforceg/date_cruncher.git"
+    "url": "git+https://github.com/gforceg/date-cruncher.git"
   },
   "keywords": [
     "date",
@@ -17,9 +17,9 @@
   "author": "Greg Hedin",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gforceg/date_cruncher/issues"
+    "url": "https://github.com/gforceg/date-cruncher/issues"
   },
-  "homepage": "https://github.com/gforceg/date_cruncher#readme",
+  "homepage": "https://github.com/gforceg/date-cruncher#readme",
   "dependencies": {
     "typescript": "^1.8.10",
     "typescript-collections": "^1.1.2"
