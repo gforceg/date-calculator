@@ -97,6 +97,7 @@ export class DateCruncher {
   // lazy caching (and retrieving) of holidays for a given 'mm/yyyy'
   // *** this should use a dictionary type ***
   static getHolidays(date: Date | string): any {
+    console.log('get holidays');
     try {
       date = DateCruncher.resolveDate(date);
       if (date == null) {
@@ -105,8 +106,10 @@ export class DateCruncher {
       if (date instanceof Date) {
 
         let cache_key = DateCruncher.resolveCacheKey(date);
+        console.log('checking holiday_cache using cache_key: ' + cache_key);
+        DateCruncher.holiday_cache.getValue(cache_key)
 
-        if (DateCruncher.holiday_cache.getValue(cache_key) === undefined) {
+        if (!DateCruncher.holiday_cache.getValue(cache_key)) {
           // find and cache the holidays for the given 'mm/yyyy'
           // *** this should use a dictionary type ***
           var new_holidays: Collections.Dictionary<String, IEvent> = new Collections.Dictionary<String, IEvent>();
