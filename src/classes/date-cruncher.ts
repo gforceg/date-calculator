@@ -92,7 +92,7 @@ export class DateCruncher {
   // the way holiday_cache is actually used is:
   // holidays_for_this_month = getHolidays('08/09/2016') - returns a lazy-cached assoc array of holidays where:
   // each key is a date and each value is aIEvent.
-  static holiday_cache: Dictionary<String, Dictionary<String, IEvent>>
+  static holiday_cache: Dictionary<String, Dictionary<String, IEvent>> = new Dictionary<String, Dictionary<String, IEvent>>();
 
   // lazy caching (and retrieving) of holidays for a given 'mm/yyyy'
   // *** this should use a dictionary type ***
