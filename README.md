@@ -11,6 +11,8 @@ npm i --save date-cruncher
 
 ###example usage
 
+A [live example is available on tonic](https://tonicdev.com/57cf22bc96657b1400bb1b51/57d18c6cd16a591400a670df)
+
 ```typescript
 import {DateCruncher as dc} from 'date-cruncher';
 
