@@ -15,14 +15,15 @@
     "noImplicitReturns": true,
     "noImplicitUseStrict": false,
     "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "rootDir": "src"
   },
   "exclude": [
     "node_modules",
     "dist",
     "typings/index.d.ts",
-    "typings/modules",
-    "src"
+    "typings/modules"
   ],
   "compileOnSave": false
 }
