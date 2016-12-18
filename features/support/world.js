@@ -1,5 +1,4 @@
-let DateCruncher = require('../dist/classes/date-cruncher.js');
-let DateParser = require('../dist/classes/date-parser.js');
+let lib = require('../../date-cruncher/index.js');
 
 module.exports = function() {
   this.testObjects = {

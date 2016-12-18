@@ -15,10 +15,11 @@
     "noImplicitReturns": true,
     "noImplicitUseStrict": false,
     "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "node",
-    "outDir": "dist",
-    "rootDir": "src"
+    "moduleResolution": "node"
   },
+  "files": [
+    "index.ts"
+  ],
   "exclude": [
     "node_modules",
     "dist",
