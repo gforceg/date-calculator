@@ -2441,9 +2441,13 @@ tslint@^3.15.1:
     resolve "^1.1.7"
     underscore.string "^3.3.4"
 
-typescript@^2.0.6:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.1.1.tgz#41c2b64472f529331b2055c0424862b44ce58d42"
+typescript-collections@^1.1.2:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/typescript-collections/-/typescript-collections-1.2.3.tgz#ef7f1bf3392a662c2c00e8c2c03381a001e02955"
+
+typescript@^2.0.0:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.1.4.tgz#b53b69fb841126acb1dd4b397d21daba87572251"
 
 uglify-js@^2.6.1:
   version "2.7.5"
