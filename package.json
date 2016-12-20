@@ -21,11 +21,12 @@
 	},
 	"homepage": "https://github.com/gforceg/date-cruncher#readme",
 	"dependencies": {
-		"typescript-collections": "^1.1.2"
+		"typescript-collections": "^1.2.3"
 	},
 	"devDependencies": {
 		"@types/core-js": "^0.9.34",
 		"@types/node": "^6.0.46",
+		"assert": "^1.4.1",
 		"cucumber": "^2.0.0-rc.2",
 		"del": "^2.2.2",
 		"es6-shim": "^0.35.1",

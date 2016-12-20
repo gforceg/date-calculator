@@ -29,6 +29,7 @@ gulp.task('default', (done) => {
     // do stuff in .tmp/
     'copy out',
     'compile',
+    'test',
     done
   );
 
