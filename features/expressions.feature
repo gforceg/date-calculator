@@ -12,16 +12,16 @@ Feature: The date cruncher should evaluate expressions.
     Given the expression "sun" is a "day of the week"
   
   Scenario: The expression parser understand ordinals: 1st 2st ... 5th lst and first second ... fifth lastd
-    Given the expression "0th" is not an "ordinal"
-    Given the expression "1st" is an "ordinal"
-    Given the expression "lst" is an "ordinal"
-    Given the expression "3st" is an "ordinal"
-    Given the expression "4th" is an "ordinal"
-    Given the expression "first" is an "ordinal"
-    Given the expression "thard" is not an "ordinal"
-    Given the expression "fifth" is an "ordinal"
-    Given the expression "fith" is not an "ordinal"
-    Given the expression "last" is an "ordinal"
+    Given the expression "0th" is not an "ordinal expression"
+    Given the expression "1st" is an "ordinal expression"
+    Given the expression "lst" is an "ordinal expression"
+    Given the expression "3st" is an "ordinal expression"
+    Given the expression "4th" is an "ordinal expression"
+    Given the expression "first" is an "ordinal expression"
+    Given the expression "thard" is not an "ordinal expression"
+    Given the expression "fifth" is an "ordinal expression"
+    Given the expression "fith" is not an "ordinal expression"
+    Given the expression "last" is an "ordinal expression"
   
   Scenario: The expression parser should understand units: 'day', 'tuesday', 'week', 'month'
     Given the expression "day" is an "ordinal unit"
@@ -38,3 +38,9 @@ Feature: The date cruncher should evaluate expressions.
     Given the expression "4" is a "scope unit"
     Given the expression "04" is a "scope unit"
     Given the expression "11/2016" is a "scope unit"
+
+  Scenario: The user is feeding different kinds of expressions to the parser.
+    Given the expression "the last tuesday in Septober" is not an "ordinal date expression"
+    Given the expression "the last friday in December" is an "ordinal date expression"
+    Given the expression "today + 5 days" is a "date math expression"
+  

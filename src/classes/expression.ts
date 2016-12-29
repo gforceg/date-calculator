@@ -61,16 +61,30 @@ export class Expression {
     '(' + units.reduce((a, b) => `${a}|${b}`) + ')'
     , 'i');
 
-  let ordinal_expression = new RegExp(
-    `((?:[1-5l](?:${ordinal_suffixes.reduce((a, b) => `${a}|${b}`)}))|(${ordinals.reduce((a, b) => `${a}|${b}`)}))`, 'i');
+  let ordinal_expression = new RegExp(`((?:[1-5l](?:${ordinal_suffixes.reduce((a, b) => `${a}|${b}`)}))|(${ordinals.reduce((a, b) => `${a}|${b}`)}))`, 'i');
 
   let scope_unit_expression = new RegExp(
-    '(?:^|\\s)((?:' + months.reduce( (a, b) => `${a}|${b}`) + ')|(?:(?:\\d{2}\/)?\\d{4}|0?[1-9]|1[0-2]))(?:$|\\s)'
+    '((?:' + months.reduce( (a, b) => `${a}|${b}`) + ')|(?:(?:\\d{2}\/)?\\d{4}|0?[1-9]|1[0-2]))'
     , 'i');
 
+
+  let ordinal_date_expression = RegExp(
+    // `(?:the\\s+)?${ordinal_expression.source}\\s+${subject_unit_expression.source}\\s+(?:(?:in|of)\\s+)?${scope_unit_expression.source}`
+    `(?:the\\s+)?${ordinal_expression.source}\\s+${subject_unit_expression.source}\\s+(?:(?:in|of)\\s+)?${scope_unit_expression.source}$`
+  , 'i');
+
+  let date_math_expression = RegExp(
+    `/a/`
+  , 'i');
+
   // console.dir(scope_unit_expression);
+  console.dir(ordinal_date_expression);
+  console.dir(ordinal_expression);
   Expression.regex.setValue('day of the week', day_of_the_week_expression); // /(sun|mon|tue(?:s)?|wed(?:n(?:e(?:s)?)?)?|thu(?:r(?:s)?)?|fri|sat(?:u(?:r)?)?)(?:d(?:a(?:y)?)?)?\s*$/i
-  Expression.regex.setValue('ordinal', ordinal_expression); // /((?:[1-5l]st|nd|rd|th)|(first|second|third|fourth|fifth|last))/i
+  Expression.regex.setValue('ordinal expression', ordinal_expression); // /((?:[1-5l]st|nd|rd|th)|(first|second|third|fourth|fifth|last))/i
   Expression.regex.setValue('ordinal unit', subject_unit_expression); // /(sunday|monday|tuesday|wednesday|thursday|friday|saturday|day|week|month)/i
   Expression.regex.setValue('scope unit', scope_unit_expression); // /(?:^|\s)((?:january|february|march|april|may|june|july|august|september|october|november|december)|(?:(?:\d{2}\/)?\d{4}|0?[1-9]|1[0-2]))(?:$|\s)/i
+  Expression.regex.setValue('ordinal date expression', ordinal_date_expression); // /(?:the)?((?:[1-5l](?:st|nd|rd|th))|(first|second|third|fourth|fifth|last))\s+(sunday|monday|tuesday|wednesday|thursday|friday|saturday|day|week|month)\s+(?:(?:in|of)\s+)?(?:^|\s)((?:january|february|march|april|may|june|july|august|september|october|november|december)|(?:(?:\d{2}\/)?\d{4}|0?[1-9]|1[0-2]))(?:$|\s)/i
+// /(?:the\s+)?((?:[1-5l](?:st|nd|rd|th))|(first|second|third|fourth|fifth|last))\s+(sunday|monday|tuesday|wednesday|thursday|friday|saturday|day|week|month)\s+(?:(?:in|of)\s+)?(?:^|\s)((?:january|february|march|april|may|june|july|august|september|october|november|december)|(?:(?:\d{2}\/)?\d{4}|0?[1-9]|1[0-2]))(?:$|\s)\$/i
+  Expression.regex.setValue('date math expression', date_math_expression); 
 })();

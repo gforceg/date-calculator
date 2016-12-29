@@ -1,8 +1,0 @@
-Feature: The date cruncher should evaluate ordinal expressions.
-
-  As a user, I want to be able to evaluate expressions such as "The 3rd Thursday in November", and "The last Friday in January of 2017"
-
-  Scenario: The user wants to evaluate "the last Friday in December 2016"
-    Given I evaluate "The last Friday in December 2016" as "the solution"
-    Then "the solution" must equal "12/30/2016"
-  
