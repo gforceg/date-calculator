@@ -1,4 +1,6 @@
 import { DateParser } from './date-parser';
+import { IExpression } from './iexpression';
+import { Expression } from './expression';
 import { Dictionary } from 'typescript-collections';
 
 export class DateCruncher {
@@ -16,19 +18,35 @@ export class DateCruncher {
       let ordinal = results[1];
       let unit = results[2];
       let container = results[3];
-      console.log('ordinal:', ordinal);
-      console.log('unit:', unit);
-      console.log('container:', container);
-      
+      // console.log('ordinal:', ordinal);
+      // console.log('unit:', unit);
+      // console.log('container:', container);      
     }
   }
 
-  evaluate = (expression: string): Date => {
-    this.parse_expression(expression);
-    console.log('expression', 'ordinal expression', this.expressions.getValue('ordinal expression').test(expression));
+  identify_expression = (str_in: string): IExpression => {
+    if (['today', 'now'].includes(str_in)) { return 'today'; }
+    else if (str_in == 'yesterday') { return 'yesterday'; }
+    else if (str_in == 'tomorrow') { return 'tomorrow'; }
+    else if (Expression.regex.getValue('date').test(str_in)) { return 'date'; }
     return null;
   }
-  
 
-
+  evaluate = (str_in: string): Date => {
+    let exp_type = this.identify_expression(str_in);
+    let date = new Date();
+    switch(exp_type) {
+      case 'today': return date;
+      case 'tomorrow': date.setDate(date.getDate() + 1); return date;
+      case 'yesterday': date.setDate(date.getDate() - 1); return date;
+      case 'date': console.log('date!', str_in); break;
+      case 'day of the week': break;
+      case 'ordinal expression': break;
+      case 'ordinal unit': break;
+      case 'scope unit': break;
+      case 'ordinal date expression': break;
+      default: date = null;
+    }
+    return date;
+  }
 }

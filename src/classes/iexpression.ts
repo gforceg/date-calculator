@@ -1,0 +1,1 @@
+export type IExpression = 'today' | 'date' | 'yesterday' | 'tomorrow' | 'day of the week' | 'ordinal expression' | 'ordinal unit' | 'scope unit' | 'ordinal date expression' | 'date math expression';

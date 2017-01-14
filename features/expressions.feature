@@ -1,6 +1,6 @@
-Feature: The date cruncher should evaluate expressions.
+Feature: The date cruncher should recognize expressions.
 
-  As a user, I want to be able to evaluate expressions such as "Thursday" and "Fri"
+  As a calculator, I want to recognize when a someone is asking me a question involving date math.
 
   Scenario: The user wants to determine if an expression matches a day of the week.
     Given the expression "thursday" is a "day of the week"
@@ -32,7 +32,7 @@ Feature: The date cruncher should evaluate expressions.
   Scenario: The expression parser should understand ordinal scope units 'November', '2016', '11/2016', '11'
     Given the expression "November" is a "scope unit"
     Given the expression "2016" is a "scope unit"
-    Given the expression "21" is not a "scope unit"
+    Given the expression "21" is a "scope unit"
     Given the expression "dang" is not a "scope unit"
     Given the expression "11" is a "scope unit"
     Given the expression "4" is a "scope unit"
@@ -43,4 +43,8 @@ Feature: The date cruncher should evaluate expressions.
     Given the expression "the last tuesday in Septober" is not an "ordinal date expression"
     Given the expression "the last friday in December" is an "ordinal date expression"
     Given the expression "today + 5 days" is a "date math expression"
-  
+    Given the expression "today + 5 fridays" is a "date math expression"
+    Given the expression "12/10/2012 + 5 fridays" is a "date math expression"
+    Given the expression "2010/10/05 + 5 fridays" is a "date math expression"
+    Given the expression "20104/10/05 + 5 fridays" is not a "date math expression"
+    
